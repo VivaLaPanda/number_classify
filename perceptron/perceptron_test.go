@@ -1,4 +1,4 @@
-package main
+package perceptron
 
 import (
 	"bufio"
@@ -6,19 +6,19 @@ import (
 	"os"
 	"strconv"
 	"strings"
-
-	pctLib "github.com/vivalapanda/number_classify/perceptron"
+	"testing"
 )
 
-func main() {
-	perceptron := pctLib.New(8, .5)
+func TestAll(t *testing.T) {
+	perceptron := New(8, .1)
 
-	trainArr, trainExptVal := parseFile("testdata.txt")
+	trainArr, trainExptVal := parseFile("../train_data.txt")
+	testArr, testExptVal := parseFile("../test_data.txt")
 
 	perceptron = perceptron.Train(trainArr, trainExptVal)
 
-	accuracy := perceptron.Test(trainArr, trainExptVal)
-	fmt.Printf("Classified inputs with %% %v accuracy\n", accuracy)
+	accuracy := perceptron.Test(testArr, testExptVal)
+	fmt.Printf("Classified inputs with %% %v accuracy\n", accuracy*100)
 }
 
 func parseFile(filename string) (imgArrays [][][]int, expectedValues []int) {
